@@ -34,8 +34,9 @@ public class StrictBankAccount implements BankAccount {
     /**
      * 
      * {@inheritDoc}
+     * @throws WrongAccountHolderException 
      */
-    public void deposit(final int usrID, final double amount) {
+    public void deposit(final int usrID, final double amount) throws WrongAccountHolderException {
         if (checkUser(usrID)) {
             this.balance += amount;
             increaseTransactionsCount();
@@ -47,8 +48,10 @@ public class StrictBankAccount implements BankAccount {
     /**
      * 
      * {@inheritDoc}
+     * @throws NotEnoughFoundsException 
+     * @throws WrongAccountHolderException 
      */
-    public void withdraw(final int usrID, final double amount) {
+    public void withdraw(final int usrID, final double amount) throws NotEnoughFoundsException, WrongAccountHolderException {
         if (checkUser(usrID)) {
         	if(isWithdrawAllowed(amount)) {
         		this.balance -= amount;
@@ -64,8 +67,10 @@ public class StrictBankAccount implements BankAccount {
     /**
      * 
      * {@inheritDoc}
+     * @throws WrongAccountHolderException 
+     * @throws TransactionsOVerQuotaException 
      */
-    public void depositFromATM(final int usrID, final double amount) {
+    public void depositFromATM(final int usrID, final double amount) throws WrongAccountHolderException, TransactionsOVerQuotaException {
         if (totalTransactionCount < maximumAllowedATMTransactions) {
             this.deposit(usrID, amount - StrictBankAccount.ATM_TRANSACTION_FEE);
             increaseTransactionsCount();
@@ -77,8 +82,11 @@ public class StrictBankAccount implements BankAccount {
     /**
      * 
      * {@inheritDoc}
+     * @throws TransactionsOVerQuotaException 
+     * @throws WrongAccountHolderException 
+     * @throws NotEnoughFoundsException 
      */
-    public void withdrawFromATM(final int usrID, final double amount) {
+    public void withdrawFromATM(final int usrID, final double amount) throws TransactionsOVerQuotaException, NotEnoughFoundsException, WrongAccountHolderException {
         if (totalTransactionCount < maximumAllowedATMTransactions) {
             this.withdraw(usrID, amount + StrictBankAccount.ATM_TRANSACTION_FEE);
         } else {
@@ -106,8 +114,10 @@ public class StrictBankAccount implements BankAccount {
      * 
      * @param usrID
      *            id of the user related to these fees
+     * @throws WrongAccountHolderException 
+     * @throws TransactionsOVerQuotaException 
      */
-    public void computeManagementFees(final int usrID) {
+    public void computeManagementFees(final int usrID) throws WrongAccountHolderException, TransactionsOVerQuotaException {
         final double feeAmount = MANAGEMENT_FEE + (totalTransactionCount * StrictBankAccount.TRANSACTION_FEE);
         if (checkUser(usrID)) {
         	if (isWithdrawAllowed(feeAmount)) {
