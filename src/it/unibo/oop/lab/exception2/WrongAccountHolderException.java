@@ -2,7 +2,7 @@ package it.unibo.oop.lab.exception2;
 
 import java.util.Arrays;
 
-public class WrongAccountHolderException extends Exception {
+public class WrongAccountHolderException extends IllegalStateException {
 
 	private final int userID;
 	

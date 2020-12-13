@@ -1,6 +1,6 @@
 package it.unibo.oop.lab.exception2;
 
-public class TransactionsOVerQuotaException extends Exception {
+public class TransactionsOVerQuotaException extends IllegalStateException {
 	
 	public TransactionsOVerQuotaException() {
 		super();
