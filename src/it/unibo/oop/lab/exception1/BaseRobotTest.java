@@ -37,7 +37,7 @@ public final class BaseRobotTest {
          */
         for (int i = 0; i < RobotEnvironment.WORLD_X_UPPER_LIMIT; i++) {
             // check if position if coherent
-            assertTrue("[CHECKING MOVING RIGHT]", r1.moveRight());
+            assertTrue("[CHECKING MOVING RIGHT]", r1.moveRight()); //he wants a boolean but from the changes you asked me to do I have a void
         }
         try {
         	r1.moveRight();
